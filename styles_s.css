@@ -1,0 +1,176 @@
+.body {
+    background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c2d0cffb-96b3-48e3-83bb-eb81054ac04a/dekeyxr-a6a1712a-ebfd-4363-a140-266652837b3e.png/v1/fill/w_1280,h_720,q_80,strp/bleach___ichigo_wallpaper__hd__by_dglproductions_dekeyxr-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYzJkMGNmZmItOTZiMy00OGUzLTgzYmItZWI4MTA1NGFjMDRhXC9kZWtleXhyLWE2YTE3MTJhLWViZmQtNDM2My1hMTQwLTI2NjY1MjgzN2IzZS5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.mPn3Zi3V36yWXW3JpEb7c0TgqX3-N-cGilvDjLnmdcs');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+
+
+.ml11 {
+    font-weight: 700;
+    font-size: 3.5em;
+    text-align: center;
+  }
+
+  .ml11 .text-wrapper {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.1em;
+    padding-right: 0.05em;
+    padding-bottom: 0.15em;
+  }
+
+  .ml11 .line {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 3px;
+    background-color: #fff;
+    transform-origin: 0 50%;
+  }
+
+  .ml11 .line1 {
+    top: 0;
+    left: 0;
+  }
+
+  .ml11 .letter {
+    display: inline-block;
+    line-height: 1em;
+  }
+
+.nav-link {
+    font-weight: 50;
+    font-size: 1.5em;
+}
+
+
+
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+.bg-image {
+  /* Full height */
+  height: 50%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Container holding the image and the text */
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+/* Top left text */
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+/* Top right text */
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* Images used */
+.img1 { background-image: url("https://wallpaperaccess.com/full/552397.jpg"); }
+.img2 { background-image: url("https://www.harvard.edu/wp-content/uploads/2021/03/100408_Yard_045-1200x630.jpg"); }
+.img3 { background-image: url("https://mail.google.com/mail/u/2?ui=2&ik=d1863229c0&attid=0.1.1&permmsgid=msg-f:1749069343035771193&th=1845f14cef2c4939&view=fimg&fur=ip&sz=s0-l75-ft&attbid=ANGjdJ9Q4dTaobv1d0UvHWI6vcBwT0zbLx5csxsNMxb1KoLhrG0yMAHA3UUGQQ_-dwWPFH_C5ZnQHp_cO8Ye4cDpmLbJiFEiGNwyuYL_LCs5Beay8gQCExH512-Lgmc&disp=emb"); }
+.img4 { background-image: url("https://i.imgur.com/4SrgtKJ.jpeg"); }
+
+
+.image {
+  position: relative;
+  width: 100%; /* for IE 6 */
+}
+
+h2 {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  width: 100%;
+}
