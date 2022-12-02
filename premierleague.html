@@ -1,0 +1,13 @@
+{% extends "templates.html" %}
+
+{% block title %}
+    Premier League
+{% endblock %}
+
+{% block main %}
+    {% for dictionary in standings %}
+        {% for key in dictionary %}
+            <p> {{dictionary[key]}} </p>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
