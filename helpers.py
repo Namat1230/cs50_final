@@ -2,6 +2,7 @@ import requests
 import json
 import sqlite3
 import pprint
+from collections import OrderedDict
 
 # These are the leagues we will be working with; they are the top 5 most watched leagues
 our_leagues = {
@@ -16,7 +17,6 @@ our_leagues = {
 # To call this function, import get_leagues_stats and our_leagues from helpers into app py and paste appropriate arguments
 # Only need to call this function when we change our desired leagues
 def get_leagues_stats(leagues, connection, database):
-
     # API documentation for getitng a response for active leagues
     url = "https://v3.football.api-sports.io/leagues?current=true"
 
@@ -26,7 +26,7 @@ def get_leagues_stats(leagues, connection, database):
         'x-rapidapi-host': 'v3.football.api-sports.io'
     }
 
-    # returning response in a json format
+    # Returning response in a json format
     response = requests.request("GET", url, headers=headers, data=payload).json()
 
     if not response:
@@ -57,7 +57,7 @@ def get_standings(league_id, season_year):
         'x-rapidapi-host': 'v3.football.api-sports.io'
     }
 
-    # returning the response we want in a json format
+    # Returning the response we want in a json format
     response = requests.request("GET", url, headers=headers, data=payload).json()
     return response["response"][0]["league"]["standings"][0]
 
@@ -75,17 +75,17 @@ def make_standings(league_id, season_year):
     # Store key value pairs that we want to display on our website
     for item in tmp:
         # Temporary dictionary
-        teams = {}
-        teams.update({"rank" : item["rank"]})
-        teams.update({"name" : item["team"]["name"]})
-        teams.update({"logo" : item["team"]["logo"]})
-        teams.update({"points" : item["points"]})
-        teams.update({"played" : item["all"]["played"]})
-        teams.update({"win" : item["all"]["win"]})
-        teams.update({"draw" : item["all"]["draw"]})
-        teams.update({"lose" : item["all"]["lose"]})
-        teams.update({"goalsfor" : item["all"]["goals"]["for"]})
-        teams.update({"goalsagainst" : item["all"]["goals"]["against"]})
+        teams = OrderedDict()
+        teams["Rank"] = item["rank"]
+        teams["Name"] = item["team"]["name"]
+        teams["Logo"] = item["team"]["logo"]
+        teams["Points"] = item["points"]
+        teams["Played"] = item["all"]["played"]
+        teams["Win"] = item["all"]["win"]
+        teams["Draw"] = item["all"]["draw"]
+        teams["Lose"] = item["all"]["lose"]
+        teams["Goalsfor"] = item["all"]["goals"]["for"]
+        teams["Goalsagainst"] = item["all"]["goals"]["against"]
 
         # Append the temp dictionary to our list
         listofteams.append(teams)
@@ -101,8 +101,8 @@ def convertinput(database, league_name):
     return id
 
 # Get the name of either last or next round of a league depending on the input, we will use this to display it on the website and access data
-def get_next_or_last_round(league_id, season_year, next_or_last):
-    # API documentation for getitng a response for standings
+def get_round(league_id, season_year, next_or_last):
+    # API documentation for getitng a response for name of next/last round
     url = f"https://v3.football.api-sports.io/fixtures?season={season_year}&league={league_id}&{next_or_last}=1"
 
     payload={}
@@ -111,8 +111,68 @@ def get_next_or_last_round(league_id, season_year, next_or_last):
         'x-rapidapi-host': 'v3.football.api-sports.io'
     }
 
-    # returning the response we want in a json format
+    # Returning the response we want in a json format
     response = requests.request("GET", url, headers=headers, data=payload).json()
     response = response["response"][0]["league"]["round"]
     return response
 
+# Get the fixtures that are in the next/last round
+def get_fixture(league_id, season_year, next_or_last):
+    # Getting the name of next round
+    round = get_round(league_id, season_year, next_or_last)
+    if not round:
+        print("Couldn't get round")
+        sys.exit(1)
+
+    # API documentation for getitng a response for fixtures in the next/last round
+    url = f"https://v3.football.api-sports.io/fixtures?league={league_id}&season={season_year}&round={round}"
+
+    payload={}
+    headers = {
+        'x-rapidapi-key': 'c4b2f02de36f4916cc87ab129e628422',
+        'x-rapidapi-host': 'v3.football.api-sports.io'
+    }
+
+    # Returning the response we want in a json format
+    response = requests.request("GET", url, headers=headers, data=payload).json()
+    return response["response"]
+
+# Preparing our return value for usage in flask for next round
+def get_next_round(league_id, season_year):
+    response = get_fixture(league_id, season_year, "next")
+    if not response:
+        print("Couldn't get next round")
+        sys.exit(1)
+    fixtures = []
+    for item in response:
+        # Temporary dictionary
+        tmp = OrderedDict()
+        tmp["hlogo"] = item["teams"]["home"]["logo"]
+        tmp["Home"] = item["teams"]["home"]["name"]
+        tmp["Away"] = item["teams"]["away"]["name"]
+        tmp["alogo"] = item["teams"]["away"]["logo"]
+
+        # Append the tmp dictionary to our list
+        fixtures.append(tmp)
+    return fixtures
+
+# Preparing our return value for usage in flask for previous round
+def get_last_round(league_id, season_year):
+    response = get_fixture(league_id, season_year, "last")
+    if not response:
+        print("Couldn't get last round")
+        sys.exit(1)
+    fixtures = []
+    for item in response:
+        # Temporary dictionary
+        tmp = OrderedDict()
+        tmp["hlogo"] = item["teams"]["home"]["logo"]
+        tmp["Home"] = item["teams"]["home"]["name"]
+        tmp["hgoals"] = item["goals"]["home"]
+        tmp["agoals"] = item["goals"]["away"]
+        tmp["Away"] = item["teams"]["away"]["name"]
+        tmp["alogo"] = item["teams"]["away"]["logo"]
+
+        # Append the tmp dictionary to our list
+        fixtures.append(tmp)
+    return fixtures

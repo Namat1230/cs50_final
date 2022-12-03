@@ -5,6 +5,10 @@ import pprint
 
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
+from collections import OrderedDict
+
+# Define constant for the season year
+season = 2022
 
 # Configure application
 app = Flask(__name__)
@@ -28,7 +32,7 @@ def premierleague():
         sys.exit(1)
 
     # Make standings according to user input
-    standings = make_standings(convertinput(db, input), 2022)
+    standings = make_standings(convertinput(db, input, season))
 
     # Close SQL connection
     conn.close()
