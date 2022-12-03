@@ -4,6 +4,41 @@ import sqlite3
 import pprint
 from collections import OrderedDict
 
+import os
+import urllib.parse
+
+from flask import redirect, render_template, request, session
+from functools import wraps
+
+def apology(message, code=400):
+    """Render message as an apology to user."""
+    def escape(s):
+        """
+        Escape special characters.
+
+        https://github.com/jacebrowning/memegen#special-characters
+        """
+        for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
+                         ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
+            s = s.replace(old, new)
+        return s
+    return render_template("apology.html", top=code, bottom=escape(message)), code
+
+
+def login_required(f):
+    """
+    Decorate routes to require login.
+
+    https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 # These are the leagues we will be working with; they are the top 5 most watched leagues
 our_leagues = {
     "Premier League" : "England",
@@ -84,8 +119,8 @@ def make_standings(league_id, season_year):
         teams["Win"] = item["all"]["win"]
         teams["Draw"] = item["all"]["draw"]
         teams["Lose"] = item["all"]["lose"]
-        teams["Goalsfor"] = item["all"]["goals"]["for"]
-        teams["Goalsagainst"] = item["all"]["goals"]["against"]
+        teams["Goals For"] = item["all"]["goals"]["for"]
+        teams["Goals Against"] = item["all"]["goals"]["against"]
 
         # Append the temp dictionary to our list
         listofteams.append(teams)
