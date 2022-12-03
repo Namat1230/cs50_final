@@ -11,7 +11,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
         <link href="styles.css" rel="stylesheet">
-        <title> Template </title>
+        <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
 
@@ -44,6 +44,17 @@
                 <li class="nav-item">
                   <a class="nav-link" href="/betting">Betting</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/buy">Buy</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/register">Register</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/login">Login</a>
+                </li>
+
+                  <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
 
               </ul>
             </div>
@@ -89,25 +100,7 @@
           });
         </script>
 
-        <style>
-            .parallax {
-            /* The image used */
-            background-image: url("https://digitalhub.fifa.com/transform/11efbf28-c08e-4a13-958f-78685fbb8a80/Qatar-2022-s-32-teams-graphic");
 
-            /* Set a specific height */
-            min-height: 1000px;
-
-            /* Create the parallax scrolling effect */
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            }
-
-            </style>
-
-            <!-- Container element -->
-            <div class="parallax"></div>
 
             {% block main %}{% endblock %}
 

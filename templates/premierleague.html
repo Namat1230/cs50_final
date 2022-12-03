@@ -5,5 +5,85 @@
 {% endblock %}
 
 {% block main %}
-    <h1>People like Soccer</h1>
+    <body>
+        <div class="header">
+            <img src="https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png" width="75" height="50" class="d-inline-block align-top" alt="">
+            <span style="font-size:22.0pt;  font-family: trebuchet ms, sans-serif; font-weight: bold;"> Premier League Standings</span>
+        </div>
+        <div class="section">
+            <table class="table table-sm table-dark">
+                <thead style = "text-align: center;">
+                    <tr scope="col">
+                            {% for key in thead %}
+                            <th> {{key}} </th>
+                            {% endfor %}
+                    </tr>
+                </thead>
+                <tbody style = "text-align: center;">
+                    {% for dictionary in standings %}
+                    <tr scope="row">
+                        {% for key in dictionary %}
+                            {% if key != "Logo" %}
+                                <td> {{dictionary[key]}} </td>
+                            {% else %}
+                                <td> <img src={{dictionary[key]}} width="40" height="40"> </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="header">
+            <img src="https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png" width="75" height="50" class="d-inline-block align-top" alt="">
+            <span style="font-size:22.0pt;  font-family: trebuchet ms, sans-serif; font-weight: bold;"> Premier League Matches </span>
+        </div>
+        <div class="section">
+            <table class="table table-sm table-dark">
+                <thead style = "text-align: center;">
+                    <tr>
+                        <th colspan = "6"> Last Round </th>
+                    </tr>
+                </thead>
+                <tbody style = "text-align: center;">
+                        {% for item in last %}
+                            <tr>
+                                {% for key in item %}
+                                    {% if key != "hlogo" and key != "alogo" %}
+                                        <td> {{ item[key]}} </td>
+                                    {% else %}
+                                        <td> <img src={{item[key]}} width="40" height="40"> </td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <table class="table table-sm table-dark">
+                <thead style = "text-align: center;">
+                    <tr>
+                        <th colspan = "6"> Next Round </th>
+                    </tr>
+                </thead>
+                <tbody style = "text-align: center;">
+                        {% for item in next %}
+                            <tr>
+                                {% for key in item %}
+                                    {% if key != "hlogo" and key != "alogo" %}
+                                        <td> {{ item[key]}} </td>
+                                    {% else %}
+                                        <td> <img src={{item[key]}} width="40" height="40"> </td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</body>
+
 {% endblock %}

@@ -1,31 +1,30 @@
 {% extends "templates.html" %}
 
 {% block title %}
-    Premier League
+    Home
 {% endblock %}
 
 {% block main %}
 
-    <!-- <div class="container">
-    <img src="https://cdn.britannica.com/79/149179-050-DC23D823/snowflake-threads-wool-coat.jpg" alt="Snow" style="width:100%;">
-    <div class="centered">Centered</div>
-    </div> -->
 
-    <div class="container">
-        <img src="https://cdn.britannica.com/79/149179-050-DC23D823/snowflake-threads-wool-coat.jpg" alt="Snow" style="width:100%;">
-        <div class="bottom-left">Bottom Left</div>
-        <div class="top-left">Top Left</div>
-        <div class="top-right">Top Right</div>
-        <div class="bottom-right">Bottom Right</div>
-        <div class="centered">Centered</div>
-    </div>
+    <style>
+    .parallax {
+    /* The image used */
+    background-image: url("https://digitalhub.fifa.com/transform/11efbf28-c08e-4a13-958f-78685fbb8a80/Qatar-2022-s-32-teams-graphic");
 
-    <div class="image">
+    /* Set a specific height */
+    min-height: 1000px;
 
-        <img src="https://cdn.britannica.com/79/149179-050-DC23D823/snowflake-threads-wool-coat.jpg" alt="Snow" style="width:100%;">
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
 
-        <h2>Text you want to display over the image</h2>
+    </style>
 
-  </div>
+    <!-- Container element -->
+    <div class="parallax"></div>
 
 {% endblock %}
