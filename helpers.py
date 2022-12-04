@@ -155,7 +155,7 @@ def get_fixture(league_id, season_year, next_or_last):
         sys.exit(1)
 
     if next_or_last == "next":
-        status = "NS"
+        status = "NS-TBD-1H-HT-2H-ET-BT-P-SUSP-INT-PST-LIVE"
     else:
         status = "FT-AET-PEN"
 
