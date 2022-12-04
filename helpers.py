@@ -154,8 +154,13 @@ def get_fixture(league_id, season_year, next_or_last):
         print("Couldn't get round")
         sys.exit(1)
 
+    if next_or_last == "next":
+        status = "NS"
+    else:
+        status = "FT-AET-PEN"
+
     # API documentation for getitng a response for fixtures in the next/last round
-    url = f"https://v3.football.api-sports.io/fixtures?league={league_id}&season={season_year}&round={round}"
+    url = f"https://v3.football.api-sports.io/fixtures?league={league_id}&season={season_year}&round={round}&status={status}"
 
     payload={}
     headers = {
@@ -250,3 +255,31 @@ def get_odds(league_id, season_year, fixtures):
     for item in delete:
         fixtures.remove(item)
     return odds
+
+# Get the info about fixtures we will display
+def get_fixtures_info(fixtures):
+    string = '-'.join(str(id) for id in fixtures)
+    # API documentation for getitng a response for fixtures in the next/last round
+    url = f"https://v3.football.api-sports.io/fixtures?ids={string}"
+
+    payload={}
+    headers = {
+        'x-rapidapi-key': 'c4b2f02de36f4916cc87ab129e628422',
+        'x-rapidapi-host': 'v3.football.api-sports.io'
+    }
+
+    # Returning the response we want in a json format
+    response = requests.request("GET", url, headers=headers, data=payload).json()
+    response = response["response"]
+
+    # Return list
+    info = []
+    for dictionary in response:
+        # Temporary dictionary
+        tmp = OrderedDict()
+        tmp["hlogo"] = dictionary["teams"]["home"]["logo"]
+        tmp["home"] = dictionary["teams"]["home"]["name"]
+        tmp["away"] = dictionary["teams"]["away"]["name"]
+        tmp["alogo"] = dictionary["teams"]["away"]["logo"]
+        info.append(tmp)
+    return info

@@ -1,10 +1,12 @@
 import sqlite3
-from helpers import make_standings, convertinput, get_last_round, get_next_round, apology, login_required, get_fixture_ids, get_odds, get_leagues_stats, our_leagues
+from helpers import make_standings, convertinput, get_last_round, get_next_round, apology, login_required, get_fixture_ids, get_odds, get_fixtures_info
 import sys
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
+
+import pprint
 
 # Define constant for the season year
 season = 2022
@@ -304,9 +306,11 @@ def worldcup():
     fixtures = get_fixture_ids(convertinput(db, input), season)
 
     # Returns dictionary of odds, in format of home away for every fixture
-    odds = get_odds(convertinput(db, input), season)
+    odds = get_odds(convertinput(db, input), season, fixtures)
 
-    # Gets the information about fixtures, STILL NEED TO DO
+    # Gets the information about fixtures
+    info = get_fixtures_info(fixtures)
+
 
 
     return render_template("worldcup.html")
