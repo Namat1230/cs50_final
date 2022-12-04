@@ -16,8 +16,8 @@
     <body>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">
-            <img src="https://www.citypng.com/public/uploads/small/11649467430muh4laitexztthptnujv3m3kvigwshancjugfimyxlxiygmj6fgxdypyvrkqb647da3obgb9eoswxcmnl2qmvnkbedpsqmokramd.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            <a class="navbar-brand" href="/">
+                <img src="https://www.citypng.com/public/uploads/small/11649467430muh4laitexztthptnujv3m3kvigwshancjugfimyxlxiygmj6fgxdypyvrkqb647da3obgb9eoswxcmnl2qmvnkbedpsqmokramd.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 SoccerBase</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -38,20 +38,25 @@
                     <a class="dropdown-item" href="/serie_a">Serie A</a>
                     <a class="dropdown-item" href="/ligue_one">Ligue 1</a>
                   </div>
-                <li class="nav-item">
-                  <a class="nav-link" href="/worldcup">World Cup 2022</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/betting">Betting</a>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    World Cup 2022
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/wcstandings">Standings</a>
+                    <a class="dropdown-item" href="/wcbetting">Betting</a>
+                  </div>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/buy">Buy</a>
-                </li>
+
                 <li class="nav-item">
                   <a class="nav-link" href="/register">Register</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/account">Account</a>
                 </li>
 
                   <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
@@ -101,9 +106,7 @@
         </script>
 
 
-
             {% block main %}{% endblock %}
-
 
 
     </body>

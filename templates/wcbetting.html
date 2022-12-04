@@ -1,0 +1,47 @@
+{% extends "templates.html" %}
+
+{% block title %}
+    World Cup
+{% endblock %}
+
+{% block main %}
+    <div class="header">
+        <img src="https://www.edigitalagency.com.au/wp-content/uploads/FIFA-World-Cup-Qatar-logo-png.png" width="50" height="58" class="d-inline-block align-top" alt="">
+        <span style="font-size:22.0pt;  font-family: trebuchet ms, sans-serif; font-weight: bold;"> World Cup Betting</span>
+    </div>
+
+    <div class="section">
+        <table class="table table-sm table-dark">
+            <thead style = "text-align: center;">
+                <tr>
+                    <th colspan = "6"> Matches </th>
+                </tr>
+            </thead>
+            <tbody style = "text-align: center;">
+                    {% for i in range(length) %}
+                        <tr>
+                            {% for key in info[i] %}
+                                {% if key != "hlogo" and key != "alogo" %}
+                                    <td> {{ info[i][key]}} </td>
+                                {% else %}
+                                    <td> <img src={{info[i][key]}} width="55" height="40"> </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            {% for key in odds[i] %}
+                                <td colspan = "2">
+                                    <div class="text-center">
+                                        <a href = "/bet?=">
+                                            <button class="btn btn-dark" id="{{fixtures[i]}}" class = "{{key}}" type="submit" style = "background-color: #555555;">{{ odds[i][key] }}</button>
+                                        </a>
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
