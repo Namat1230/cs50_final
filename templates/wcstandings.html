@@ -6,25 +6,38 @@
 
 {% block main %}
     <body>
+        <div class="header">
+            <img src="https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png" width="75" height="50" class="d-inline-block align-top" alt="">
+            <span style="font-size:22.0pt;  font-family: trebuchet ms, sans-serif; font-weight: bold;"> World Cup Standings</span>
+        </div>
+
         <div class="section">
             <table class="table table-sm table-dark">
                 <thead style = "text-align: center;">
-                    <tr>
-                        <th colspan = "6"> Next Round </th>
+                    <tr scope="col">
+                            {% for key in thead %}
+                            <th> {{key}} </th>
+                            {% endfor %}
                     </tr>
                 </thead>
                 <tbody style = "text-align: center;">
-                        {% for item in next %}
-                            <tr>
-                                {% for key in item %}
-                                    {% if key != "hlogo" and key != "alogo" %}
-                                        <td> {{ item[key]}} </td>
-                                    {% else %}
-                                        <td> <img src={{item[key]}} width="40" height="40"> </td>
-                                    {% endif %}
-                                {% endfor %}
-                            </tr>
+                    {% for group in standings %}
+                    <tr>
+                        <td colspan = "10" style = "text-align: left; font-weight: bold;">{{group}}</td>
+                        {% for team in standings[group] %}
+                        <tr>
+                            {% for key in team %}
+                                {% if key != "Logo" %}
+                                <td> {{team[key]}}</td>
+                                {% else %}
+                                <td> <img src={{team[key]}} width="55" height="40"> </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
                         {% endfor %}
+
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
