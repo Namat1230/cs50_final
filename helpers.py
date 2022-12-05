@@ -3,14 +3,10 @@ import requests
 from collections import OrderedDict
 from flask import redirect, render_template, session
 
-# Some portion of code from finance
+# Portion of code from finance
 def apology(message, code=400):
     """Render message as an apology to user."""
     def escape(s):
-        """
-        Escape special characters.
-        https://github.com/jacebrowning/memegen#special-characters
-        """
         for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
                          ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
             s = s.replace(old, new)
@@ -19,10 +15,6 @@ def apology(message, code=400):
 
 # Code from finance to require login for certain pages
 def login_required(f):
-    """
-    Decorate routes to require login.
-    https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
-    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get("user_id") is None:
@@ -30,7 +22,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# These are the leagues we will be working with; they are the top 5 most watched leagues
+# These are the leagues we will be working with; they are the top 5 most watched leagues + World cup
 our_leagues = {
     "Premier League" : "England",
     "Bundesliga" : "Germany",
@@ -44,6 +36,7 @@ our_leagues = {
 # To call this function, import get_leagues_stats and our_leagues from helpers into app py and paste appropriate arguments
 # Only need to call this function when we change our desired leagues
 def get_leagues_stats(leagues, connection, database):
+
     # API documentation for getitng a response for active leagues
     url = "https://v3.football.api-sports.io/leagues?current=true"
 
@@ -75,6 +68,7 @@ def get_leagues_stats(leagues, connection, database):
     return True
 
 def get_standings(league_id, season_year):
+
     # API documentation for getitng a response for standings
     url = f"https://v3.football.api-sports.io/standings?league={league_id}&season={season_year}"
 
@@ -90,9 +84,12 @@ def get_standings(league_id, season_year):
         print("Couldn't connect to API")
         return False
     response = response["response"][0]["league"]["standings"]
+
+    # Return the first element if the lenght is 1, else return the whole list
     if len(response) > 1:
         return response
-    else: return response[0]
+    else:
+        return response[0]
 
 def make_standings(league_id, season_year):
 
@@ -102,14 +99,18 @@ def make_standings(league_id, season_year):
     # Check if the list is a list of lists (we have groups in standings)
     if any(isinstance(el, list) for el in tmp):
 
+        # Return dictionary
         groups = {}
 
+        # Loop through every group
         for group in tmp:
+
             # Variable to store list of dicionaries (teams) that is going to be returned
             listofteams = []
 
             # Store key value pairs that we want to display on our website
             for item in group:
+
                 # Temporary dictionary
                 teams = OrderedDict()
                 teams["Rank"] = item["rank"]
@@ -129,7 +130,6 @@ def make_standings(league_id, season_year):
 
         # Return list of teams (dictionaries)
         return groups
-
     else:
 
         # Variable to store list of dicionaries (teams) that is going to be returned
@@ -156,7 +156,7 @@ def make_standings(league_id, season_year):
         # Return list of teams (dictionaries)
         return listofteams
 
-# Convert league name input to an id
+# Convert league name input to an id, this way we can make it dynamic according to the route
 def convertinput(database, league_name):
     id = database.execute("SELECT id FROM leagues WHERE name = ?", [league_name])
     id = id.fetchone()
@@ -184,6 +184,7 @@ def get_fixture(league_id, season_year, next_or_last):
     # Getting the name of next round
     round = get_round(league_id, season_year, next_or_last)
 
+    # Status will help us display only the matches we want
     if next_or_last == "next":
         status = "NS-TBD"
     else:
@@ -205,8 +206,13 @@ def get_fixture(league_id, season_year, next_or_last):
 # Preparing our return value for usage in flask for next round
 def get_next_round(league_id, season_year):
     response = get_fixture(league_id, season_year, "next")
+
+    # Return list
     fixtures = []
+
+    # Loop trhough all matches and store the info we want in a dictionary
     for item in response:
+
         # Temporary dictionary
         tmp = OrderedDict()
         tmp["hlogo"] = item["teams"]["home"]["logo"]
@@ -224,6 +230,8 @@ def get_last_round(league_id, season_year):
 
     # Here we store our return values
     fixtures = []
+
+    # Loop trhough all matches and store the info we want in a dictionary
     for item in response:
         # Temporary dictionary
         tmp = OrderedDict()
@@ -244,16 +252,20 @@ def get_fixture_ids(league_id, season_year):
     # List of fixture ids
     fixtures = []
     for item in response:
+
         # Append ids to the list
         fixtures.append(item["fixture"]["id"])
     return fixtures
 
 def get_odds(league_id, season_year, fixtures):
+
     # Return list
     odds = []
-    # ids that will be deleted from fixtures
+
+    # Ids that will be deleted from fixtures
     delete = []
     for id in fixtures:
+
         # API documentation for getitng a response for fixtures in the next/last round
         url = f"https://v3.football.api-sports.io/odds?league={league_id}&season={season_year}&bet=2&fixture={id}&bookmaker=6"
 
@@ -266,10 +278,12 @@ def get_odds(league_id, season_year, fixtures):
         # Returning the response we want in a json format
         response = requests.request("GET", url, headers=headers, data=payload).json()
         response = response["response"]
+
         # If we get a response
         if not response:
             delete.append(id)
         else:
+
             # Temporary dictionary
             tmp = OrderedDict()
             tmp["home"] = response[0]["bookmakers"][0]["bets"][0]["values"][0]["odd"]
@@ -285,6 +299,7 @@ def get_fixtures_info(fixtures):
         string = '-'.join(str(id) for id in fixtures)
     else:
         string = fixtures
+
     # API documentation for getitng a response for fixtures in the next/last round
     url = f"https://v3.football.api-sports.io/fixtures?ids={string}"
 
@@ -330,10 +345,13 @@ def check_bet(fixture):
         return False
 
 def get_status(fixtures):
+
+    # If our input is multiple fixtures, we turn them into a string 
     if isinstance(fixtures, list):
         string = '-'.join(str(id) for id in fixtures)
     else:
         string = fixtures
+
     # API documentation for getitng a response for fixtures in the next/last round
     url = f"https://v3.football.api-sports.io/fixtures?ids={string}"
 
