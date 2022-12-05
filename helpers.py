@@ -281,7 +281,10 @@ def get_odds(league_id, season_year, fixtures):
 
 # Get the info about fixtures we will display
 def get_fixtures_info(fixtures):
-    string = '-'.join(str(id) for id in fixtures)
+    if isinstance(fixtures, list):
+        string = '-'.join(str(id) for id in fixtures)
+    else:
+        string = fixtures
     # API documentation for getitng a response for fixtures in the next/last round
     url = f"https://v3.football.api-sports.io/fixtures?ids={string}"
 
@@ -306,3 +309,41 @@ def get_fixtures_info(fixtures):
         tmp["alogo"] = dictionary["teams"]["away"]["logo"]
         info.append(tmp)
     return info
+
+def check_bet(fixture):
+
+    # API documentation for getitng a response for fixtures in the next/last round
+    url = f"https://v3.football.api-sports.io/fixtures?id={fixture}"
+
+    payload={}
+    headers = {
+        'x-rapidapi-key': 'c4b2f02de36f4916cc87ab129e628422',
+        'x-rapidapi-host': 'v3.football.api-sports.io'
+    }
+
+    # Returning the response we want in a json format
+    response = requests.request("GET", url, headers=headers, data=payload).json()
+    response = response["response"][0]
+    if response["teams"]["home"]["winner"] == None:
+        return True
+    else:
+        return False
+
+def get_status(fixtures):
+    if isinstance(fixtures, list):
+        string = '-'.join(str(id) for id in fixtures)
+    else:
+        string = fixtures
+    # API documentation for getitng a response for fixtures in the next/last round
+    url = f"https://v3.football.api-sports.io/fixtures?ids={string}"
+
+    payload={}
+    headers = {
+        'x-rapidapi-key': 'c4b2f02de36f4916cc87ab129e628422',
+        'x-rapidapi-host': 'v3.football.api-sports.io'
+    }
+
+    # Returning the response we want in a json format
+    response = requests.request("GET", url, headers=headers, data=payload).json()
+    response = response["response"][0]["teams"]
+    return response

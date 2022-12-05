@@ -1,5 +1,5 @@
 import sqlite3
-from helpers import make_standings, convertinput, get_last_round, get_next_round, apology, login_required, get_fixture_ids, get_odds, get_fixtures_info, get_standings
+from helpers import make_standings, convertinput, get_last_round, get_next_round, apology, login_required, get_fixture_ids, get_odds, get_fixtures_info, check_bet, get_status
 import sys
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
@@ -33,15 +33,6 @@ def after_request(response):
 def home():
     return render_template("home.html")
 
-@app.route("/bet", methods=["GET", "POST"])
-@login_required
-def bet():
-    if request.method == "GET":
-        return render_template("bet.html", )
-
-    else:
-        return redirect("/account")
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -71,13 +62,14 @@ def login():
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", (request.form.get("username"),))
         rows = rows.fetchall()
+        print(rows)
 
         # Ensure username exists and password is correct
         if not len(rows) or not check_password_hash(rows[0][2], request.form.get("password")):
             return apology("invalid username and/or password", 400)
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]
+        session["user_id"] = rows[0][0]
 
         # Close SQL connection
         conn.close()
@@ -128,8 +120,8 @@ def register():
 
         # Check if username is taken
         check = db.execute("SELECT * FROM users WHERE username = ?", (username,))
-        check = check.fetchone()
-        if check:
+        check = check.fetchall()
+        if len(check):
             conn.close
             return apology("username is taken", 400)
 
@@ -162,8 +154,34 @@ def logout():
 @app.route("/account")
 @login_required
 def account():
+    # Connect to our database
+    try:
+        conn = sqlite3.connect("soccerbase.db")
+        db = conn.cursor()
 
-    return render_template("account.html")
+    except sqlite3.Error as error:
+        print("Error while connecting to sqlite", error)
+        sys.exit(1)
+
+    bets = db.execute("SELECT * FROM bets WHERE user_id = ?", (13,))
+    bets = bets.fetchall()
+    if any(isinstance(el, list) for el in bets):
+        return
+    else:
+        # Info that we will display
+        info = get_fixtures_info(976458)
+        if check_bet(976458):
+            status = "Active"
+        else:
+            bet = db.execute("SELECT bet FROM bets WHERE user_id = ?", (13,))
+            bet = bet.fetchone()
+            result = get_status(976458)
+            if result[bet[0]]["winner"]:
+                status = "Bet Won"
+            else:
+                status = "Bet Lost"
+        print(status)
+        return render_template("account.html")
 
 
 @app.route("/premierleague")
@@ -296,43 +314,84 @@ def serie_a():
 
     return render_template("serie_a.html", standings=standings, thead = thead, last = last, next = next)
 
-@app.route("/wcbetting")
+@app.route("/wcbetting", methods=["GET", "POST"])
+@login_required
 def worldcup():
-
     input = "World Cup"
 
-    # Connect to our database
-    try:
-        conn = sqlite3.connect("soccerbase.db")
-        db = conn.cursor()
+    if request.method == "GET":
 
-    except sqlite3.Error as error:
-        print("Error while connecting to sqlite", error)
-        sys.exit(1)
+        # Connect to our database
+        try:
+            conn = sqlite3.connect("soccerbase.db")
+            db = conn.cursor()
 
-    # Gets the id of fixtures we are going to display
-    fixtures = get_fixture_ids(convertinput(db, input), season)
+        except sqlite3.Error as error:
+            print("Error while connecting to sqlite", error)
+            sys.exit(1)
 
-    # Returns dictionary of odds, in format of home away for every fixture
-    odds = get_odds(convertinput(db, input), season, fixtures)
+        # Gets the id of fixtures we are going to display
+        fixtures = get_fixture_ids(convertinput(db, input), season)
 
-    # Gets the information about fixtures
-    info = get_fixtures_info(fixtures)
+        # Returns dictionary of odds, in format of home away for every fixture
+        odds = get_odds(convertinput(db, input), season, fixtures)
 
-    length = len(info)
+        # Gets the information about fixtures
+        info = get_fixtures_info(fixtures)
 
-    return render_template("wcbetting.html", odds = odds, info = info, length = length, fixtures = fixtures)
+        length = len(info)
 
-@app.route("/betting")
-@login_required
-def betting():
-    return render_template("betting.html")
+        conn.close()
+
+        return render_template("wcbetting.html", odds = odds, info = info, length = length, fixtures = fixtures)
+
+    else:
+        fixture = request.form.get("fixture")
+        team = request.form.get("team")
+        odds = request.form.get("odds")
+        money = request.form.get("money")
+
+        if not fixture or not team or not odds:
+            return apology("Click a Button to Bet!", 400)
+
+        if not money:
+            return apology("Put in Money", 400)
+
+        if not money.isdigit():
+            return apology("Invalid amount", 400)
+        money = int(money)
+        if money < 10:
+            return apology("The minimum bet amount is 10$")
+
+        # Connect to our database
+        try:
+            conn = sqlite3.connect("soccerbase.db")
+            db = conn.cursor()
+
+        except sqlite3.Error as error:
+            print("Error while connecting to sqlite", error)
+            sys.exit(1)
+
+        # Update user balance
+        current = db.execute("SELECT cash FROM users WHERE id = ?", (session["user_id"], ))
+        current = current.fetchone()
+        print(current)
+        if current < money:
+            return apology("Can't afford")
+        else:
+            db.execute("UPDATE users SET cash = ? WHERE id = ?", (current-money, session["user_id"]))
+
+        # Update history
+        db.execute("INSERT INTO bets (user_id, amount, fixture, bet) VALUES (?, ?, ?, ?)", (session["user_id"]), money, fixture, team)
+
+        return redirect("/")
+
 
 
 @app.route("/wcstandings")
 @login_required
 def wcstandings():
-    input = "Serie A"
+    input = "World Cup"
 
     # Connect to our database
     try:
@@ -345,10 +404,10 @@ def wcstandings():
 
     # Make standings according to user input
     standings = make_standings(convertinput(db, input), season)
-
+    index = list(standings.keys())
+    index = index[0]
+    thead = standings[index][0]
     # Close SQL connection
     conn.close()
 
-    return render_template("wcstandings.html")
-
-pprint.pprint(make_standings(1,2022))
+    return render_template("wcstandings.html", standings = standings, thead = thead)
