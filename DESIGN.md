@@ -9,3 +9,11 @@ Home redirects you to the home page with no login required.
 Leagues contains the Big Five European Soccer Leagues and displays their standings. There is the table of the league which shows the position of each team. Then, there are the actual matches that have been played last round and are coming up next round. 
 
 World Cup 2022 contains the standings of the World Cup where positions of each country are shown within their respective group.
+
+Register allows the user to register into the system by inputting their username and password twice.
+
+Login allows the user to log into their account that they created in register. 
+
+Account lets the user view information related to the bets they have placed: status, match, your bet team, amount, odds, time, and your balance. 
+
+Log out lets the user log out of their account.
