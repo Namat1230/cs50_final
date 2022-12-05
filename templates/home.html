@@ -6,8 +6,8 @@
 
 {% block main %}
 
-
-    <style>
+<!-- Need to use parallax again or else it won't work -->
+<style>
     .parallax {
     /* The image used */
     background-image: url("https://digitalhub.fifa.com/transform/11efbf28-c08e-4a13-958f-78685fbb8a80/Qatar-2022-s-32-teams-graphic");
@@ -26,28 +26,29 @@
 
     <!-- Container element -->
     <div class="parallax">
-        <p style = "text-align: center;  position: relative;position: absolute;top: 50%;
+        <p style = "text-align: center; position: relative;position: absolute;top: 50%;
         left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);
         font-size: 125px;font-family: Tahoma , monospace; font-weight: bold;background-color: #F9F6EE;
        opacity: 0.75;color: black;">
         WELCOME
-        <a href="/la_liga">
-            <img src="https://assets.laliga.com/assets/logos/laliga-h/laliga-h-1200x1200.png" width="100" height="100" class="d-inline-block align-top" alt="">
-        </a>
-        <a href="/ligue_one">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Ligue1.svg/1200px-Ligue1.svg.png"  width="76" height="100" class="d-inline-block align-top" alt="">
+        <a href="/premierleague">
+            <img src="https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png"  width="150" height="100" class="d-inline-block align-top" alt="">
         </a>
 
         <a href="/bundesliga">
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/1200px-Bundesliga_logo_%282017%29.svg.png"   width="100" height="100" class="d-inline-block align-top" alt="">
         </a>
 
-        <a href="/premierleague">
-            <img src="https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png"  width="150" height="100" class="d-inline-block align-top" alt="">
+        <a href="/la_liga">
+            <img src="https://assets.laliga.com/assets/logos/laliga-h/laliga-h-1200x1200.png" width="100" height="100" class="d-inline-block align-top" alt="">
         </a>
 
         <a href="/serie_a">
             <img src="https://www.fifplay.com/img/public/serie-a-logo-transparent.png" width="89" height="100" class="d-inline-block align-top" alt="">
+        </a>
+
+        <a href="/ligue_one">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Ligue1.svg/1200px-Ligue1.svg.png"  width="76" height="100" class="d-inline-block align-top" alt="">
         </a>
         </p>
 
@@ -73,3 +74,5 @@
 
 
 {% endblock %}
+
+

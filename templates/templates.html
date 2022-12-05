@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
+  <style>
+    .parallax {
+    /* The image used */
+    background-image: url("https://digitalhub.fifa.com/transform/11efbf28-c08e-4a13-958f-78685fbb8a80/Qatar-2022-s-32-teams-graphic");
+
+    /* Set a specific height */
+    min-height: 1000px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+
+    </style>
+
+
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -67,49 +86,10 @@
 
           </nav>
 
-
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-
-
-        <script>
-          // Wrap every letter in a span
-        var textWrapper = document.querySelector('.ml11 .letters');
-        textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>");
-
-        anime.timeline({loop: true})
-          .add({
-            targets: '.ml11 .line',
-            scaleY: [0,1],
-            opacity: [0.5,1],
-            easing: "easeOutExpo",
-            duration: 700
-          })
-          .add({
-            targets: '.ml11 .line',
-            translateX: [0, document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10],
-            easing: "easeOutExpo",
-            duration: 700,
-            delay: 100
-          }).add({
-            targets: '.ml11 .letter',
-            opacity: [0,1],
-            easing: "easeOutExpo",
-            duration: 600,
-            offset: '-=775',
-            delay: (el, i) => 34 * (i+1)
-          }).add({
-            targets: '.ml11',
-            opacity: 0,
-            duration: 1000,
-            easing: "easeOutExpo",
-            delay: 1000
-          });
-        </script>
-
-        <div class = "b">
+          <div class = "parallax">
 
             {% block main %}{% endblock %}
+          </div>
 
-        </div>
     </body>
 </html>

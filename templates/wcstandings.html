@@ -6,9 +6,9 @@
 
 {% block main %}
     <body>
-        <div class="header">
-            <img src="https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png" width="75" height="50" class="d-inline-block align-top" alt="">
-            <span style="font-size:22.0pt;  font-family: trebuchet ms, sans-serif; font-weight: bold;"> World Cup Standings</span>
+        <div class="header" style = "background-color: #F9F6EE; opacity: 0.90;color: black;">
+            <img src="https://logos-world.net/wp-content/uploads/2022/11/2022-FIFA-World-Cup-logo.png"  width="90" height="50" class="d-inline-block align-top" alt="">
+            <span style="font-size:24.0pt; font-family: trebuchet ms, sans-serif; font-weight: bold;"> World Cup Standings</span>
         </div>
 
         <div class="section">
@@ -23,7 +23,7 @@
                 <tbody style = "text-align: center;">
                     {% for group in standings %}
                     <tr>
-                        <td colspan = "10" style = "text-align: left; font-weight: bold;">{{group}}</td>
+                        <td colspan = "10" style = "text-align: left; font-weight: bold; padding: 25px; font-size:22.0pt; ">{{group}}</td>
                         {% for team in standings[group] %}
                         <tr>
                             {% for key in team %}

@@ -13,9 +13,9 @@
         }
 
     </script>
-    <div class="header">
+    <div class="header" style = "background-color: #F9F6EE; opacity: 0.90;color: black;">
         <img src="https://www.edigitalagency.com.au/wp-content/uploads/FIFA-World-Cup-Qatar-logo-png.png" width="50" height="58" class="d-inline-block align-top" alt="">
-        <span style="font-size:22.0pt;  font-family: trebuchet ms, sans-serif; font-weight: bold;"> World Cup Betting</span>
+        <span style="font-size:28.0pt;  font-family: trebuchet ms, sans-serif; font-weight: bold;"> World Cup Betting</span>
     </div>
 
     <div class="section">
@@ -49,23 +49,37 @@
             </tbody>
         </table>
     </div>
-    <h1 style = "font-size:300%; text-align: center; font-family: trebuchet ms, sans-serif; font-weight: bold;">Bet</h1>
-    <form action="/buy" method="post">
-        <div class="mb-3">
-            <input id = "fixture" disabled class="form-control mx-auto w-auto" name="fixture" placeholder="fixture">
-        </div>
-        <div class="mb-3">
-            <input id = "team" disabled class="form-control mx-auto w-auto" name="team" placeholder="team">
-        </div>
-        <div class="mb-3">
-            <input id = "odds" disabled class="form-control mx-auto w-auto" name="odds" placeholder="odds">
-        </div>
-        <div class="mb-3">
-            <input autocomplete="off" class="form-control mx-auto w-auto" name="money" placeholder="Amount ($)" type="number">
-        </div>
-        <div class="text-center">
-            <button class="btn btn-dark" type="submit">Bet</button>
-        </div>
-    </form>
+    <h1 style = "font-size:500%; text-align: center; font-family: trebuchet ms, sans-serif; font-weight: bold; position: relative; position: absolute; top: 50%; left: 50%;
+    -ms-transform: translate(-50%, +270%); transform: translate(-50%, +270%); background-color: #F9F6EE; opacity: 0.75;color: black;">Bet</h1>
+        <form action="/wcbetting" method="POST" style = "text-align: center; position: relative; position: absolute; top: 50%; left: 50%;
+        -ms-transform: translate(-50%, 120%); transform: translate(-50%, 120%);">
+            <div class="mb-3">
+
+                <div class="input-group input-group-lg">
+                    <input id = "fixture" name="fixture" class = "form-control mx-auto w-auto" placeholder="fixture">
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group input-group-lg">
+                    <input id = "team" name="team" class = "form-control mx-auto w-auto" placeholder="team">
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group input-group-lg">
+                    <input id = "odds" name="odds" class = "form-control mx-auto w-auto" placeholder="odds">
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group input-group-lg">
+                    <input autocomplete="off" class="form-control mx-auto w-auto" name="money" placeholder="Amount ($)" type="number">
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-dark btn-lg" type="submit">Bet</button>
+            </div>
+        </form>
     <br></br>
+    <br></br>
+    <br></br>
+
 {% endblock %}

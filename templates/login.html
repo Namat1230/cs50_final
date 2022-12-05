@@ -5,16 +5,27 @@
 {% endblock %}
 
 {% block main %}
-    <h1 style = "font-size:300%; text-align: center; font-family: trebuchet ms, sans-serif; font-weight: bold;">Log In</h1>
-    <form action="/login" method="post">
+
+
+    <h1 style = "font-size:500%; text-align: center; font-family: trebuchet ms, sans-serif; font-weight: bold; text-align: center;
+    position: relative; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -200%); transform: translate(-50%, -200%); background-color: #F9F6EE;
+    opacity: 0.75;color: black;">Log In</h1>
+    <form action="/login" method="post" style = "text-align: center; position: relative; position: absolute; top: 50%; left: 50%;
+    -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+            <div class="input-group input-group-lg">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+            </div>
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+            <div class="input-group input-group-lg">
+                <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" class="col-sm-2 col-form-label col-form-label-lg">
+            </div>
         </div>
         <div class="text-center">
-            <button class="btn btn-primary" type="submit">Log In</button>
+                <button class="btn btn-primary btn-lg" type="submit">Log In</button>
         </div>
     </form>
+
 {% endblock %}
