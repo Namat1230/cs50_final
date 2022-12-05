@@ -1,0 +1,45 @@
+@app.route("/account")
+@login_required
+def account():
+    # Connect to our database
+    try:
+        conn = sqlite3.connect("soccerbase.db")
+        db = conn.cursor()
+
+    except sqlite3.Error as error:
+        print("Error while connecting to sqlite", error)
+        sys.exit(1)
+
+    bets = db.execute("SELECT * FROM bets WHERE user_id = ?", (session["user_id"],))
+    bets = bets.fetchall()
+    display = []
+    results = []
+    details = []
+    for item in bets:
+        # Info that we will display
+        info = get_fixtures_info(item[2])
+        display.append(info)
+        tmp = []
+        tmp.append(item[3])
+        tmp.append(item[1])
+        tmp.append(item[6])
+        tmp.append(item[5])
+        if check_bet(item[2]):
+            status = "Active"
+        else:
+            result = get_status(item[2])
+            if result[item[3]]["winner"]:
+                status = "Bet Won"
+                db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", (int(item[1]*item[6]), session["user_id"]))
+                conn.commit()
+            else:
+                status = "Bet Lost"
+                db.execute("UPDATE users SET cash = cash - ? WHERE id = ?", (int(item[1]), session["user_id"]))
+                conn.commit()
+        results.append(status)
+        details.append(tmp)
+    balance = db.execute("SELECT cash FROM users WHERE id = ?", (session["user_id"],))
+    balance = balance.fetchone()
+    balance = balance[0]
+    length = len(results)
+    return render_template("account.html", balance=balance, display=display, results=results, length=length, details=details)
