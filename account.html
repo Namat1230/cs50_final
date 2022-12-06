@@ -16,6 +16,7 @@
                     <th> Amount</th>
                     <th> Odds </th>
                     <th> Time (GMT) </th>
+                    <th> Money won </th>
                 </tr>
             </thead>
             <tbody style = "text-align: center;">
@@ -44,15 +45,20 @@
                         {% endfor %}
                         </td>
                         <td> {{ display[i][0][details[i][0]] }} </td>
-                        <td> {{ details[i][1] }} </td>
+                        <td> ${{ details[i][1] }} </td>
                         <td> {{ details[i][2] }} </td>
                         <td> {{ details[i][3] }} </td>
+                        {% if results[i] == "Bet Won" %}
+                            <td> ${{ details[i][1] * details[i][2] }} </td>
+                        {% else %}
+                            <td> $0 </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
-                    <td  colspan = "6" style ="text-align: right;"> Your balance: {{ balance }}$ &nbsp;</td>
+                    <td  colspan = "7" style ="text-align: right;"> Your balance: ${{ balance }} &nbsp;</td>
                 </tr>
             </tfoot>
         </table>
