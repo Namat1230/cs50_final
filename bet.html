@@ -1,0 +1,23 @@
+{% extends "templates.html" %}
+
+{% block title %}
+    Bet
+{% endblock %}
+
+{% block main %}
+    <h1 style = "font-size:300%; text-align: center; font-family: trebuchet ms, sans-serif; font-weight: bold;">Bet</h1>
+    <form action="/buy" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" disabled name="fixture" placeholder="fixture" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" disabled name="team" placeholder="team" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="money" placeholder="Amount ($)" type="number">
+        </div>
+        <div class="text-center">
+            <button class="btn btn-dark" type="submit">Bet</button>
+        </div>
+    </form>
+{% endblock %}

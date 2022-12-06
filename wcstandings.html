@@ -1,0 +1,46 @@
+{% extends "templates.html" %}
+
+{% block title %}
+    Premier League
+{% endblock %}
+
+{% block main %}
+    <body>
+        <div class="headtext">
+            <img src="https://logos-world.net/wp-content/uploads/2022/11/2022-FIFA-World-Cup-logo.png"  width="90" height="50" class="d-inline-block align-top" alt="">
+            <span class = "textdisplay"> World Cup Standings</span>
+        </div>
+
+        <div class="section">
+            <table class="table table-sm table-dark">
+                <thead style = "text-align: center;">
+                    <tr scope="col">
+                            {% for key in thead %}
+                            <th> {{key}} </th>
+                            {% endfor %}
+                    </tr>
+                </thead>
+                <tbody style = "text-align: center;">
+                    {% for group in standings %}
+                    <tr>
+                        <td colspan = "10" style = "text-align: left; font-weight: bold; padding: 25px; font-size:22.0pt; ">{{group}}</td>
+                        {% for team in standings[group] %}
+                        <tr>
+                            {% for key in team %}
+                                {% if key != "Logo" %}
+                                <td> {{team[key]}}</td>
+                                {% else %}
+                                <td> <img src={{team[key]}} width="55" height="40"> </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</body>
+
+{% endblock %}

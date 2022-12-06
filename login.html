@@ -1,0 +1,31 @@
+{% extends "templates.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+
+    <h1 class = "textbox" style = "font-size:500%;
+    font-family: trebuchet ms, sans-serif;
+    -ms-transform: translate(-50%, -200%);
+    transform: translate(-50%, -200%);">Log In</h1>
+    <form action="/login" method="post" class = "form">
+
+        <div class="mb-3">
+            <div class="input-group input-group-lg">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="input-group input-group-lg">
+                <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" class="col-sm-2 col-form-label col-form-label-lg">
+            </div>
+        </div>
+        <div class="text-center">
+                <button class="btn btn-dark btn-lg" type="submit">Log In</button>
+        </div>
+    </form>
+
+{% endblock %}

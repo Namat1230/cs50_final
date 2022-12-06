@@ -1,0 +1,91 @@
+{% extends "templates.html" %}
+
+{% block title %}
+    La Liga
+{% endblock %}
+
+{% block main %}
+    <div class="headtext">
+        <img src="https://assets.laliga.com/assets/logos/laliga-h/laliga-h-1200x1200.png" width="50" height="50" class="d-inline-block align-top" alt="">
+        <span class = "textdisplay"> La Liga Standings </span>
+    </div>
+    <div class="section">
+        <table class="table table-sm table-dark">
+            <thead style = "text-align: center;">
+                <tr scope="col">
+                        {% for key in thead %}
+                        <th> {{key}} </th>
+                        {% endfor %}
+                </tr>
+            </thead>
+            <tbody style = "text-align: center;">
+                {% for dictionary in standings %}
+                <tr scope="row">
+                    {% for key in dictionary %}
+                        {% if key != "Logo" %}
+                            <td> {{dictionary[key]}} </td>
+                        {% else %}
+                            <td> <img src={{dictionary[key]}} width="40" height="40"> </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="headtext">
+        <img src="https://assets.laliga.com/assets/logos/laliga-h/laliga-h-1200x1200.png" width="50" height="50" class="d-inline-block align-top" alt="">
+        <span class = "textdisplay"> La Liga Standings Matches </span>
+    </div>
+    <div class="section">
+        <table class="table table-sm table-dark">
+            <thead style = "text-align: center;">
+                <tr>
+                    <th colspan = "6"> Last Round </th>
+                </tr>
+            </thead>
+            <tbody style = "text-align: center;">
+                    {% for item in last %}
+                        <tr>
+                            {% for key in item %}
+                                {% if key == "hlogo" or key == "alogo" %}
+                                    <td> <img src={{item[key]}} width="40" height="40"> </td>
+                                {% elif key == "Home" or key == "Away" %}
+                                    <td style = "width: 25%"> {{ item[key]}} </td>
+                                {% else %}
+                                    <td> {{ item[key]}} </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <table class="table table-sm table-dark">
+            <thead style = "text-align: center;">
+                <tr>
+                    <th colspan = "6"> Next Round </th>
+                </tr>
+            </thead>
+            <tbody style = "text-align: center;">
+                    {% for item in next %}
+                        <tr>
+                            {% for key in item %}
+                                {% if key == "hlogo" or key == "alogo" %}
+                                    <td> <img src={{item[key]}} width="40" height="40"> </td>
+                                {% elif key == "Home" or key == "Away" %}
+                                    <td style = "width: 25%"> {{ item[key]}} </td>
+                                {% else %}
+                                    <td> {{ item[key]}} </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "templates.html" %}
+
+{% block title %}
+    Additional Cash
+{% endblock %}
+
+{% block main %}
+    <h1 class = "textbox" style = "font-family: trebuchet ms, sans-serif; font-size:370%;
+    -ms-transform: translate(-50%, -200%); transform: translate(-50%, -200%)">Additional Cash</h1>
+    <form action="/additionalcash" method="post" class = "form">
+        <div class="mb-3">
+            <div class="input-group input-group-lg">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="add_cash" name="add_cash" placeholder="Additional Cash" type="number">
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-dark btn-lg" type="submit">Add Cash</button>
+        </div>
+    </form>
+{% endblock %}
