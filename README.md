@@ -17,7 +17,7 @@ Account lets the user view information related to the bets they have placed: sta
 
 Log out lets the user log out of their account.
 
-Video url: https://youtu.be/gsFBD2HVrRA
+Video url: https://youtu.be/qxaixOG4K6k
 
 Namat Noori
 House: Canaday
