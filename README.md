@@ -18,3 +18,11 @@ Account lets the user view information related to the bets they have placed: sta
 Log out lets the user log out of their account.
 
 Video url: https://youtu.be/gsFBD2HVrRA
+
+Namat Noori
+House: Canaday
+Concentration: Computer Science
+
+Ondrej Vesely
+House: Thayer
+Concentration: Computer Science
