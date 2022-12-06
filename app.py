@@ -131,6 +131,7 @@ def register():
         user = db.execute("SELECT id FROM users WHERE username = ?", (username,))
         user = user.fetchone()
         session["user_id"] = user
+
         # Close SQL connection
         conn.close()
 
@@ -405,6 +406,7 @@ def account():
         tmp.append(item[5])
 
         # Check the status of the bet and change it accordingly; Bet is stil active
+
         if check_bet(item[2]):
             status = "Active"
         else:
@@ -412,8 +414,15 @@ def account():
             result = get_status(item[2])
             if result[item[3]]["winner"]:
                 status = "Bet Won"
-                db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", (int(item[1]*item[6]), session["user_id"]))
-                conn.commit()
+
+                # We need to check if we already paid the user, if not, we want to pay him for his win
+                payment = db.execute("SELECT * FROM transactions WHERE user_id = ? AND fixture = ?", (session["user_id"], item[2]))
+                payment = payment.fetchall()
+                if not payment:
+                    db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", (int(item[1]*item[6]), session["user_id"]))
+                    conn.commit()
+                    db.execute("INSERT INTO transactions (user_id, fixture) VALUES (?, ?)", (session["user_id"], item[2]))
+                    conn.commit()
             else:
                 # Bet lost
                 status = "Bet Lost"
@@ -427,4 +436,5 @@ def account():
     balance = balance.fetchone()
     balance = balance[0]
     length = len(results)
+    conn.close()
     return render_template("account.html", balance=balance, display=display, results=results, length=length, details=details)
