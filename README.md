@@ -1,7 +1,7 @@
 # cs50_final
-This project is intended is be used on CS50 codespaces, but it could theoretically be used on any codespaces since we do not use CS50 specific functions. In this project, we attempted to create an all-encompassing soccer website. It displays the standings of the 5 primary leagues in soccer and the World Cup. Moreover, it allows you to bet on World Cup games and not regular soccer matches as the leagues are stopped due to the World Cup and thus the betting data is not available. It welcomes you and displays images of the leagues and of the world cup which are clickable and brings you to those pages within the website.
+This project is intended is be used on CS50 codespaces, but it could theoretically be used on any codespaces since we do not use CS50 specific functions. In this project, we attempted to create an all-encompassing soccer website. It displays the standings of the 5 European primary leagues in soccer and the World Cup. Moreover, it allows you to bet on World Cup games and not regular soccer matches as the leagues are stopped due to the World Cup and thus the betting data for those matches are not available. It welcomes you and displays images of the leagues and of the world cup which are clickable and brings you to those pages within the website.
 
-Firstly, the website starts at the home page. This consists of a navigation bar which has Home, Leagues, World Cup 2022, Register, Login, Account, and Log Out.
+Firstly, the website starts at the home page. This consists of a bootstrap navigation bar which has Home, Leagues, World Cup 2022, Register, Login, Account, and Log Out.
 
 Home redirects you to the home page with no login required.
 
