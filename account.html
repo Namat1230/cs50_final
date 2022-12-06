@@ -16,7 +16,7 @@
                     <th> Amount</th>
                     <th> Odds </th>
                     <th> Time (GMT) </th>
-                    <th> Money won </th>
+                    <th> Money </th>
                 </tr>
             </thead>
             <tbody style = "text-align: center;">
@@ -49,9 +49,9 @@
                         <td> {{ details[i][2] }} </td>
                         <td> {{ details[i][3] }} </td>
                         {% if results[i] == "Bet Won" %}
-                            <td> ${{ details[i][1] * details[i][2] }} </td>
+                            <td> +${{ details[i][1] * details[i][2] }} </td>
                         {% else %}
-                            <td> $0 </td>
+                            <td> -${{ details[i][1] }} </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
