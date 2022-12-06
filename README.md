@@ -16,3 +16,5 @@ Login allows the user to log into their account that they created in register.
 Account lets the user view information related to the bets they have placed: status, match, your bet team, amount, odds, time, and your balance.
 
 Log out lets the user log out of their account.
+
+Video url: 
